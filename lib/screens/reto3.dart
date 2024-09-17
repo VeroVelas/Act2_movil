@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';  // Para convertir la respuesta en JSON.
 import 'package:http/http.dart' as http;  // Importar el paquete http.
+import 'dart:async';  // Para usar Timer.
 
 class Reto3Screen extends StatefulWidget {
   const Reto3Screen({Key? key}) : super(key: key);
@@ -13,6 +14,39 @@ class _Reto3ScreenState extends State<Reto3Screen> {
   // URL base para obtener la información de un Pokémon
   final String apiUrl = 'https://pokeapi.co/api/v2/pokemon';
 
+  // Lista de nombres de Pokémon que cambiarán cada 5 segundos
+  final List<String> pokemonNames = ['pikachu', 'bulbasaur', 'charmander', 'squirtle'];
+
+  // Variable para controlar el índice actual del Pokémon
+  int currentPokemonIndex = 0;
+
+  // Future para almacenar los datos del Pokémon
+  Future<Map<String, dynamic>>? _pokemonData;
+
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    // Obtener la información del primer Pokémon al iniciar la pantalla
+    _loadPokemon();
+
+    // Configurar el temporizador para cambiar de imagen cada 5 segundos
+    _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
+      setState(() {
+        currentPokemonIndex = (currentPokemonIndex + 1) % pokemonNames.length;
+        _loadPokemon();
+      });
+    });
+  }
+
+  // Método para obtener los datos de un Pokémon
+  void _loadPokemon() {
+    setState(() {
+      _pokemonData = fetchPokemon(pokemonNames[currentPokemonIndex]);
+    });
+  }
+
   // Future para manejar la respuesta de la API
   Future<Map<String, dynamic>> fetchPokemon(String name) async {
     final response = await http.get(Uri.parse('$apiUrl/$name'));
@@ -24,14 +58,10 @@ class _Reto3ScreenState extends State<Reto3Screen> {
     }
   }
 
-  // Future para almacenar los datos del Pokémon
-  Future<Map<String, dynamic>>? _pokemonData;
-
   @override
-  void initState() {
-    super.initState();
-    // Obtener la información de un Pokémon al inicializar la pantalla
-    _pokemonData = fetchPokemon('pikachu');  // Puedes cambiar el nombre del Pokémon 
+  void dispose() {
+    _timer?.cancel(); // Cancelar el Timer cuando la pantalla se elimina
+    super.dispose();
   }
 
   @override
@@ -46,7 +76,7 @@ class _Reto3ScreenState extends State<Reto3Screen> {
           future: _pokemonData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();  // Mostrar cargando mientras se obtiene la información
+              return const CircularProgressIndicator();  // Mostrar spinner mientras se obtiene la información
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');  // Mostrar el error si ocurre
             } else if (snapshot.hasData) {
@@ -60,7 +90,13 @@ class _Reto3ScreenState extends State<Reto3Screen> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.network(sprite),  // Mostrar la imagen del Pokémon
+                  Image.network(
+                    sprite,
+                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const CircularProgressIndicator();  // Mostrar spinner mientras la imagen carga
+                    },
+                  ),
                   const SizedBox(height: 20),
                   Text(
                     'Nombre: $name',
@@ -76,7 +112,7 @@ class _Reto3ScreenState extends State<Reto3Screen> {
                     'Peso: $weight hectogramos',
                     style: const TextStyle(fontSize: 18),
                   ),
-                ],
+                ], 
               );
             }
             return const Text('Sin datos');  // Si no hay datos
