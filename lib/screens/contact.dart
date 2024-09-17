@@ -36,8 +36,6 @@ class _ContactScreenState extends State<ContactScreen> with SingleTickerProvider
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final List<Map<String, String>> _names = [];
   final List<Map<String, String>> _predefinedNames = [
-    {'name': 'Carlos Enrique Barriga Aguilar', 'matricula': '221188'},
-    {'name': 'Pedro Portillo Rodriguez', 'matricula': '221217'},
     {'name': 'Veronica Velasco Jimenez', 'matricula': '221224'}
   ];
 
