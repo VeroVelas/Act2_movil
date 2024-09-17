@@ -50,7 +50,7 @@ class Reto1Screen extends StatelessWidget {
             'Veronica Velasco Jimenez', // Nombre del alumno
             '221224',                  // Matrícula del alumno
             '9614427531',               // Teléfono del alumno
-            'https://github.com/VeronicaVelasco',  // URL del repositorio de GitHub
+            'https://github.com/VeroVelas/Act2_movil.git',  // URL del repositorio de GitHub
           ),
         ],
       ),
