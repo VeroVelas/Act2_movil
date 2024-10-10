@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/screens/reto1.dart';
 import 'package:flutter_application/screens/reto2.dart';
-import 'package:flutter_application/screens/reto3.dart';  // Importa la pantalla de Reto 3
+import 'package:flutter_application/screens/reto3.dart';
+import 'package:flutter_application/screens/reto4.dart';  // Importa la pantalla de Reto 4
 import 'screens/home.dart';
 import 'screens/contact.dart';
 import 'screens/splash.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/reto1': (context) => Reto1Screen(),  // Reto 1
         '/reto2': (context) => const Reto2Screen(),  // Reto 2
         '/reto3': (context) => const Reto3Screen(),  // Reto 3
+        '/reto4': (context) => ChatBotView(),  // Reto 4 (ChatBot)
       },
       debugShowCheckedModeBanner: false,
     );
@@ -80,7 +82,7 @@ class HomeScreen extends StatelessWidget {
               title: const Text('Reto 1'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/reto1');  // Redirige a Reto 1
+                Navigator.pushNamed(context, '/reto1');
               },
             ),
             ListTile(
@@ -88,15 +90,23 @@ class HomeScreen extends StatelessWidget {
               title: const Text('Reto 2'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/reto2');  // Redirige a Reto 2
+                Navigator.pushNamed(context, '/reto2');
               },
             ),
             ListTile(
               leading: const Icon(Icons.assignment_rounded),
-              title: const Text('Reto 3'),  // Agrega el Reto 3 al menú
+              title: const Text('Reto 3'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/reto3');  // Redirige a Reto 3
+                Navigator.pushNamed(context, '/reto3');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.chat),
+              title: const Text('Reto 4 - ChatBot'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/reto4');
               },
             ),
           ],

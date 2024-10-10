@@ -10,16 +10,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  url_launcher: ^6.1.7  # Correctamente colocado fuera del bloque flutter
-  http: ^1.2.2  # Actualizado a la versión más reciente
-  cupertino_icons: ^1.0.6
+  connectivity_plus: ^2.3.5  # Agregar esta línea para instalar el paquete de conectividad
+  url_launcher: ^6.1.7  # Dependencia para abrir URLs, realizar llamadas o enviar mensajes
+  http: ^1.2.2  # Manejo de solicitudes HTTP
+  cupertino_icons: ^1.0.6  # Íconos para iOS
+  speech_to_text: ^7.0.0
+  permission_handler: ^11.3.1
+  shared_preferences: ^2.3.2
+  intl: ^0.19.0
+  flutter_tts: ^4.0.2
+  google_generative_ai: ^0.4.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0  # Actualizado a la versión más reciente
+  flutter_lints: ^4.0.0  # Buenas prácticas de código
 
 flutter:
   uses-material-design: true
-
-

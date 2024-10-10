@@ -15,6 +15,7 @@ class Reto1Screen extends StatelessWidget {
     }
   }
 
+  // Método para realizar una llamada a un número específico.
   void _makeCall(String number) async {
     final Uri telUri = Uri(
       scheme: 'tel',
@@ -27,10 +28,14 @@ class Reto1Screen extends StatelessWidget {
     }
   }
 
+  // Método para abrir el repositorio de GitHub.
   void _openRepository(String url) async {
     final Uri repoUri = Uri.parse(url);
     if (await canLaunchUrl(repoUri)) {
-      await launchUrl(repoUri);
+      await launchUrl(
+        repoUri,
+        mode: LaunchMode.externalApplication, // Usar navegador externo para abrir la URL
+      );
     } else {
       throw 'No se pudo abrir el repositorio en $url';
     }
@@ -60,6 +65,11 @@ class Reto1Screen extends StatelessWidget {
   Widget _buildContactItem(
       BuildContext context, String name, String id, String phone, String repoUrl) {
     return Card(
+      elevation: 8,
+      margin: const EdgeInsets.all(10),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
       child: Column(
         children: [
           // Nombre y matrícula del alumno
@@ -90,8 +100,8 @@ class Reto1Screen extends StatelessWidget {
               icon: const Icon(Icons.link),
               label: const Text('Ver repositorio'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,  // Color del botón
-                foregroundColor: Colors.white,  // Color del texto y los iconos
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
               ),
             ),
           ),
